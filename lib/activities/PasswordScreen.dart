@@ -1,4 +1,7 @@
 import 'package:dkatalis_demo/Constants/Constants.dart';
+import 'package:dkatalis_demo/activities/PersonalInfoScreen.dart';
+import 'package:dkatalis_demo/models/PasswordValidationModel.dart';
+import 'package:dkatalis_demo/utilities/Validator.dart';
 import 'package:dkatalis_demo/views/CustomActionButton.dart';
 import 'package:dkatalis_demo/views/ProgressIndicatorMenu.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +17,20 @@ class _PasswordScreenState extends State<PasswordScreen> {
   bool _obscureText = true;
   String complexityText = "";
   Color complexityColor = null;
+  bool hasUpper = false;
+  bool hasLower = false;
+  bool hasNumber = false;
+  bool hasSpecial = false;
+  TextEditingController passwordController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    passwordController = TextEditingController();
+  }
+
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -82,6 +99,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
                                     Expanded(
                                       child: Container(
                                         child: TextFormField(
+                                          controller: passwordController,
+                                          textInputAction: TextInputAction.done,
+                                          onFieldSubmitted: (term){
+                                            goToNextPage();
+                                          },
                                           decoration: InputDecoration(
                                             border: InputBorder.none,
                                             focusedBorder: InputBorder.none,
@@ -92,6 +114,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                                             ),
                                           ),
                                           obscureText: _obscureText,
+                                          onChanged: _onChanged,
                                         ),
                                       ),
                                     ),
@@ -124,7 +147,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
                               ),
                             ),
                             Text(
-                              complexityText
+                              complexityText,
+                              style: TextStyle(
+                                color: complexityColor,
+                                fontWeight: FontWeight.bold
+                              ),
                             )
                           ],
                         ),
@@ -133,65 +160,88 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   ),
                 ),
                 Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              "a",
-                              style: Constants.passswordRulesTextStyle,
-                            ),
-                            Text(
-                              "Lowercase",
-                              style: Constants.textColorWhiteStyle,
-                            )
-                          ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(top:8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                            children: <Widget>[
+                              hasLower ?
+                              Image.asset(
+                                "drawables/tick.png",
+                                height: 32,
+                              ):
+                              Text(
+                                "a",
+                                style: Constants.passswordRulesTextStyle,
+                              ),
+                              Text(
+                                "Lowercase",
+                                style: Constants.textColorWhiteStyle,
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                                "A",
-                              style: Constants.passswordRulesTextStyle,
-                            ),
-                            Text(
-                                "Uppercase",
-                              style: Constants.textColorWhiteStyle,
-                            )
-                          ],
+                        Expanded(
+                          child: Column(
+                            children: <Widget>[
+                              hasUpper ?
+                              Image.asset(
+                                  "drawables/tick.png",
+                                height: 32,
+                              ):
+                              Text(
+                                  "A",
+                                style: Constants.passswordRulesTextStyle,
+                              ),
+                              Text(
+                                  "Uppercase",
+                                style: Constants.textColorWhiteStyle,
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                                "123",
-                              style: Constants.passswordRulesTextStyle,
-                            ),
-                            Text(
-                                "Number",
-                              style: Constants.textColorWhiteStyle,
-                            )
-                          ],
+                        Expanded(
+                          child: Column(
+                            children: <Widget>[
+                              hasNumber ?
+                              Image.asset(
+                                  "drawables/tick.png",
+                                height: 32,
+                              ):
+                              Text(
+                                  "123",
+                                style: Constants.passswordRulesTextStyle,
+                              ),
+                              Text(
+                                  "Number",
+                                style: Constants.textColorWhiteStyle,
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                                "9+",
-                              style: Constants.passswordRulesTextStyle,
-                            ),
-                            Text(
-                                "Characters",
-                              style: Constants.textColorWhiteStyle,
-                            )
-                          ],
-                        ),
-                      )
-                    ],
+                        Expanded(
+                          child: Column(
+                            children: <Widget>[
+                              hasSpecial ?
+                              Image.asset(
+                                  "drawables/tick.png",
+                                height: 32,
+                              ):
+                              Text(
+                                  "9+",
+                                style: Constants.passswordRulesTextStyle,
+                              ),
+                              Text(
+                                  "Characters",
+                                style: Constants.textColorWhiteStyle,
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
@@ -216,12 +266,45 @@ class _PasswordScreenState extends State<PasswordScreen> {
   }
 
   void goToNextPage() {
+    if(hasSpecial && hasNumber && hasUpper && hasLower) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PersonalInfoScreen()));
+    }
+  }
 
-//    if(hasError) {
-//      setState(() {});
-//    }
-//    else {
-//      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PasswordScreen()));
-//    }
+  void _onChanged(String password) {
+    PasswordValidationModel passwordValidationModel = Validator.ValidatePassword(password);
+
+    if(password.length <= 3) {
+      complexityText = " Very Weak";
+      complexityColor = Colors.red;
+    }
+    else if(password.length <=5) {
+      complexityText = " Weak";
+      complexityColor = Colors.yellowAccent;
+    }
+    else if(password.length <= 8) {
+      complexityText = " Medium";
+      complexityColor = Colors.orange;
+    }
+    else {
+      complexityText = " Strong";
+      complexityColor = Colors.green;
+    }
+
+    if(password.length == 0) {
+    complexityText = " Very Weak";
+    complexityColor = Colors.red;
+    }
+    else if(!passwordValidationModel.hasUppercase && !passwordValidationModel.hasLowercase && !passwordValidationModel.hasNumber && !passwordValidationModel.hasSpecialCharacter) {
+      complexityText = " Weak";
+      complexityColor = Colors.yellowAccent;
+    }
+
+    setState(() {
+      hasUpper = passwordValidationModel.hasUppercase;
+      hasLower = passwordValidationModel.hasLowercase;
+      hasNumber = passwordValidationModel.hasNumber;
+      hasSpecial = passwordValidationModel.hasSpecialCharacter;
+    });
   }
 }
