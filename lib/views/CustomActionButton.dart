@@ -14,7 +14,7 @@ class CustomActionButton extends StatelessWidget {
             borderRadius: BorderRadius.all(
                 Radius.circular(5.0) //         <--- border radius here
             ),
-            color: Colors.blue
+            color: Colors.blue[500]
         ),
         child: Center(
           child: Text(
