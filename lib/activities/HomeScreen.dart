@@ -1,4 +1,5 @@
 import 'package:dkatalis_demo/Constants/Constants.dart';
+import 'package:dkatalis_demo/activities/PasswordScreen.dart';
 import 'package:dkatalis_demo/views/CustomActionButton.dart';
 import 'package:dkatalis_demo/views/ProgressIndicatorMenu.dart';
 import 'package:flutter/material.dart';
@@ -197,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {});
     }
     else {
-
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PasswordScreen()));
     }
   }
 }

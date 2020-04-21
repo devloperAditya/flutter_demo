@@ -11,4 +11,14 @@ class Constants {
       fontWeight: FontWeight.bold,
       color: Colors.black
   );
+
+  static final TextStyle passswordRulesTextStyle = TextStyle(
+    fontSize: 32,
+    fontWeight: FontWeight.bold,
+    color: Colors.white
+  );
+
+  static final TextStyle textColorWhiteStyle = TextStyle(
+    color: Colors.white
+  );
 }
