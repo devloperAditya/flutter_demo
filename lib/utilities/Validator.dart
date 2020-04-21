@@ -1,5 +1,8 @@
 import 'dart:core';
 
+import 'package:dkatalis_demo/models/PasswordValidationModel.dart';
+import 'package:flutter/cupertino.dart';
+
 enum type { None, Alphabetic, Numeric, AlphaNumeric }
 
 class Validator {
@@ -302,5 +305,28 @@ class Validator {
     if (_index >= email.length || email[_index++] != ']') return false;
 
     return _index == email.length;
+  }
+
+  static PasswordValidationModel ValidatePassword(String password) {
+    RegExp regExpLower = RegExp("[a-z]");
+    RegExp regExpUpper = RegExp("[A-Z]");
+    RegExp regExpNumber = RegExp("[0-9]");
+    RegExp regExpSpecial = RegExp("[!@#%^&*()_+]");
+    bool hasUpper = false;
+    bool hasLower = false;
+    bool hasNumber = false;
+    bool hasSpecial = false;
+    for(int index=0; index< password.length; index++) {
+      if (regExpUpper.hasMatch(password[index]))
+        hasUpper = true;
+      else if (regExpLower.hasMatch(password[index]))
+        hasLower = true;
+      else if (regExpNumber.hasMatch(password[index]))
+        hasNumber = true;
+      else
+        hasSpecial = true;
+    }
+
+    return PasswordValidationModel(hasLower, hasUpper, hasNumber, hasSpecial);
   }
 }
