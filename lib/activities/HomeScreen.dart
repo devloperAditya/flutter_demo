@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Container(
           height: double.infinity,
           width: double.infinity,
-          color: Colors.grey[100],
+          color: Constants.homescreenBackground,
           child: Column(
             children: <Widget>[
               Stack(
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               " Finans",
                               style: TextStyle(
-                                  color: Colors.blue[500],
+                                  color: Constants.primaryBlueColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 36
                               ),
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.all(
                                       Radius.circular(5.0) //         <--- border radius here
                                   ),
-                                color: Colors.grey[100]
+                                color: Constants.textBackground
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.only(left:4.0, bottom:4.0),
@@ -128,18 +128,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                     prefixIcon: Icon(Icons.mail_outline,
-                                    color: Colors.grey,),
+                                    color: Constants.grey,),
                                     border: InputBorder.none,
                                     focusedBorder: InputBorder.none,
                                     enabledBorder: InputBorder.none,
                                     hintText: "Email",
                                     hintStyle: TextStyle(
-                                        color: Colors.grey,
+                                        color: Constants.grey,
                                         fontWeight: FontWeight.bold
                                     ),
                                   ),
                                   style: TextStyle(
-                                    color: Colors.grey
+                                    color: Constants.grey
                                   ),
                                 ),
                               ),
@@ -198,6 +198,11 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {});
     }
     else {
+      setState(() {
+        validateEmail = false;
+        hasError = false;
+        invalidEmailMessage = "";
+      });
       Navigator.of(context).push(MaterialPageRoute(builder: (context) => PasswordScreen()));
     }
   }

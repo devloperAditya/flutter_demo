@@ -1,3 +1,4 @@
+import 'package:dkatalis_demo/Constants/Constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomActionButton extends StatelessWidget {
@@ -14,7 +15,7 @@ class CustomActionButton extends StatelessWidget {
             borderRadius: BorderRadius.all(
                 Radius.circular(5.0) //         <--- border radius here
             ),
-            color: Colors.blue[500]
+            color: Constants.actionButtonColor
         ),
         child: Center(
           child: Text(

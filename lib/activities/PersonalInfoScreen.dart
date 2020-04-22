@@ -29,9 +29,10 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Create Account"),
+          backgroundColor: Constants.primaryBlueColor,
         ),
         body: Container(
-          color: Colors.blue[700],
+          color: Constants.primaryBlueColor,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal:16.0),
             child: Column(
@@ -93,7 +94,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   Text(
                                       "Goal For Activation",
                                     style: TextStyle(
-                                      color: Colors.grey
+                                      color: Constants.grey
                                     ),
                                   )
                                 ],
@@ -152,7 +153,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   Text(
                                     "Monthly income",
                                     style: TextStyle(
-                                        color: Colors.grey
+                                        color: Constants.grey
                                     ),
                                   )
                                 ],
@@ -228,7 +229,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   Text(
                                     "Monthly Expense",
                                     style: TextStyle(
-                                        color: Colors.grey
+                                        color: Constants.grey
                                     ),
                                   )
                                 ],

@@ -23,9 +23,10 @@ class _ScheduleVideoCallScreenState extends State<ScheduleVideoCallScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Create Account"),
+          backgroundColor: Constants.primaryBlueColor,
         ),
         body: Container(
-          color: Colors.blue[700],
+          color: Constants.primaryBlueColor,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal:16.0),
             child: Column(
@@ -170,7 +171,7 @@ class _ScheduleVideoCallScreenState extends State<ScheduleVideoCallScreen> {
                                               Text(
                                                 "Time",
                                                 style: TextStyle(
-                                                    color: Colors.grey
+                                                    color: Constants.grey
                                                 ),
                                               ),
                                             ],

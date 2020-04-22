@@ -26,7 +26,7 @@ class ProgressIndicatorMenu extends StatelessWidget {
                 "1",
                 style: Constants.progressItemTextStyle
               ),
-              backgroundColor: screenNo > 0 ? Colors.green : Colors.white,
+              backgroundColor: screenNo > 0 ? Constants.progressMenuColor : Colors.white,
             ),
           ),
           Container(
@@ -44,7 +44,7 @@ class ProgressIndicatorMenu extends StatelessWidget {
                   "2",
                   style: Constants.progressItemTextStyle
               ),
-              backgroundColor: screenNo > 1 ? Colors.green : Colors.white,
+              backgroundColor: screenNo > 1 ? Constants.progressMenuColor : Colors.white,
             ),
           ),
           Container(
@@ -62,7 +62,7 @@ class ProgressIndicatorMenu extends StatelessWidget {
                   "3",
                   style: Constants.progressItemTextStyle
               ),
-              backgroundColor: screenNo > 2 ? Colors.green : Colors.white,
+              backgroundColor: screenNo > 2 ? Constants.progressMenuColor : Colors.white,
             ),
           ),
           Container(
@@ -80,7 +80,7 @@ class ProgressIndicatorMenu extends StatelessWidget {
                   "4",
                   style: Constants.progressItemTextStyle
               ),
-              backgroundColor: screenNo > 3 ? Colors.green : Colors.white,
+              backgroundColor: screenNo > 3 ? Constants.progressMenuColor : Colors.white,
             ),
           ),
         ],

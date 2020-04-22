@@ -1,7 +1,6 @@
 import 'dart:core';
 
 import 'package:dkatalis_demo/models/PasswordValidationModel.dart';
-import 'package:flutter/cupertino.dart';
 
 enum type { None, Alphabetic, Numeric, AlphaNumeric }
 
@@ -311,7 +310,7 @@ class Validator {
     RegExp regExpLower = RegExp("[a-z]");
     RegExp regExpUpper = RegExp("[A-Z]");
     RegExp regExpNumber = RegExp("[0-9]");
-    RegExp regExpSpecial = RegExp("[!@#%^&*()_+]");
+//    RegExp regExpSpecial = RegExp("[!@#%^&*()_+]");
     bool hasUpper = false;
     bool hasLower = false;
     bool hasNumber = false;

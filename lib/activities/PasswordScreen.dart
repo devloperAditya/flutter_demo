@@ -37,9 +37,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Create Account"),
+          backgroundColor: Constants.primaryBlueColor,
         ),
         body: Container(
-          color: Colors.blue[700],
+          color: Constants.primaryBlueColor,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal:16.0),
             child: Column(
@@ -121,7 +122,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                                     GestureDetector(
                                       child: Icon(
                                           Icons.remove_red_eye,
-                                        color: _obscureText ? Colors.grey : Colors.blue[500],
+                                        color: _obscureText ? Constants.grey : Constants.primaryBlueColor,
                                       ),
                                       onTap: () {
                                         setState(() {
