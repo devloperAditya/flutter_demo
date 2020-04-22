@@ -20,10 +20,7 @@ class _RippleAnimationState extends State<RippleAnimation> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Title")),
-      body: _buildBody(),
-    );
+    return _buildBody();
   }
 
   Widget _buildBody() {
@@ -33,13 +30,13 @@ class _RippleAnimationState extends State<RippleAnimation> with SingleTickerProv
         return Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            _buildContainer(150 * _controller.value),
+            _buildContainer(100 * _controller.value),
             Align(
               child: Container(
-                height: 70,
-                width: 70,
+                height: 50,
+                width: 50,
                 child: CircleAvatar(
-                  child: Icon(Icons.calendar_today),
+                  child: Icon(Icons.date_range, size: 30,),
                   backgroundColor: Colors.white,
                 ),
               ),
