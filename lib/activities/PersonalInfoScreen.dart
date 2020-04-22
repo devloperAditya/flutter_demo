@@ -1,4 +1,5 @@
 import 'package:dkatalis_demo/Constants/Constants.dart';
+import 'package:dkatalis_demo/activities/ScheduleVideoCallScreen.dart';
 import 'package:dkatalis_demo/views/CustomActionButton.dart';
 import 'package:dkatalis_demo/views/ProgressIndicatorMenu.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +11,9 @@ class PersonalInfoScreen extends StatefulWidget {
 
 class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
-  var selectedIncome = null;
+  String selectedIncome = null;
   Item selectedGoal = null;
-  var selectedExpense = null;
+  String selectedExpense = null;
 
   List<Item> items = <Item>[
     const Item('International Vacation',Icon(Icons.flight)),
@@ -316,9 +317,9 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   }
 
   void goToNextPage() {
-//    if(hasSpecial && hasNumber && hasUpper && hasLower) {
-//      Navigator.of(context).push(MaterialPageRoute(builder: (context) => PersonalInfoScreen()));
-//    }
+    if(null != selectedExpense && null != selectedIncome && null != selectedGoal) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScheduleVideoCallScreen()));
+    }
   }
 }
 
