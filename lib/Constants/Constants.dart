@@ -21,4 +21,7 @@ class Constants {
   static final TextStyle textColorWhiteStyle = TextStyle(
     color: Colors.white
   );
+
+  static final months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  static final weekdays = ["Mon", "Tue", "Wed", "Thr", "Fri", "Sat", "Sun"];
 }

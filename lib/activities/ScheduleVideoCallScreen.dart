@@ -1,3 +1,5 @@
+import 'dart:io' ;
+import 'package:dkatalis_demo/Constants/Constants.dart';
 import 'package:dkatalis_demo/views/CustomActionButton.dart';
 import 'package:dkatalis_demo/views/ProgressIndicatorMenu.dart';
 import 'package:dkatalis_demo/views/RippleAnimation.dart';
@@ -10,6 +12,10 @@ class ScheduleVideoCallScreen extends StatefulWidget {
 }
 
 class _ScheduleVideoCallScreenState extends State<ScheduleVideoCallScreen> {
+
+  var selectedTime = "-Choose Time-";
+  var selectedDate = "-Choose Date";
+  DateTime today = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +124,7 @@ class _ScheduleVideoCallScreenState extends State<ScheduleVideoCallScreen> {
                                           child: Row(
                                             children: <Widget>[
                                               Text(
-                                                  "-Choose Date-",
+                                                  selectedDate,
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontWeight: FontWeight.bold,
@@ -138,7 +144,9 @@ class _ScheduleVideoCallScreenState extends State<ScheduleVideoCallScreen> {
                               ),
                             ),
                           ),
-                          onTap: _openDatePicker,
+                          onTap: () {
+                            _openDatePicker(context);
+                          },
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top:32.0),
@@ -172,7 +180,7 @@ class _ScheduleVideoCallScreenState extends State<ScheduleVideoCallScreen> {
                                             child: Row(
                                               children: <Widget>[
                                                 Text(
-                                                  "-Choose Date-",
+                                                  selectedTime,
                                                   style: TextStyle(
                                                       color: Colors.black,
                                                       fontWeight: FontWeight.bold,
@@ -192,7 +200,9 @@ class _ScheduleVideoCallScreenState extends State<ScheduleVideoCallScreen> {
                                 ),
                               ),
                             ),
-                            onTap: _openTimePicker,
+                            onTap: () {
+                              _openTimePicker(context);
+                            },
                           ),
                         )
                       ],
@@ -222,11 +232,47 @@ class _ScheduleVideoCallScreenState extends State<ScheduleVideoCallScreen> {
 
   }
 
-  void _openDatePicker() {
+  void _openDatePicker(BuildContext context) async {
+    if(Platform.isAndroid) {
+      final DateTime newdate = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime.now(),
+          lastDate: DateTime(2101));
+      if (newdate != null && newdate != selectedDate)
+        setState(() {
+          selectedDate = Constants.weekdays[newdate.weekday -1 ] +
+              ", " + newdate.day.toString() + " " +
+              Constants.months[newdate.month - 1] + " " +
+              newdate.year.toString();
+        });
+    }
+    else if(Platform.isIOS) {
+      showModalBottomSheet(
+          context: context,
+          builder: (BuildContext builder) {
+            return Container(
+              height: MediaQuery.of(context).copyWith().size.height / 3,
+              child: CupertinoDatePicker(
+                initialDateTime: new DateTime(today.year, today.month, today.day + 1),
+                minimumDate: new DateTime.now(),
+                mode: CupertinoDatePickerMode.date,
+                onDateTimeChanged: (DateTime newdate) {
+                  setState(() {
+                    selectedDate = Constants.weekdays[newdate.weekday -1 ] +
+                        ", " + newdate.day.toString() + " " +
+                        Constants.months[newdate.month - 1] + " " +
+                        newdate.year.toString();
+                  });
+                },
+              ),
+            );
+          });
+    }
 
   }
 
-  void _openTimePicker() {
+  void _openTimePicker(BuildContext context) async {
 
   }
 }
