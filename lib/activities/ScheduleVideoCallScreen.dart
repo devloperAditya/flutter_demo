@@ -273,6 +273,40 @@ class _ScheduleVideoCallScreenState extends State<ScheduleVideoCallScreen> {
   }
 
   void _openTimePicker(BuildContext context) async {
-
+    if(Platform.isAndroid) {
+      final TimeOfDay newdate = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+        builder: (BuildContext context, Widget child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+            child: child,
+          );
+        },
+      );
+      if (newdate != null && newdate != selectedDate)
+        setState(() {
+          selectedTime = newdate.hour.toString() +
+              ":" + newdate.minute.toString();
+        });
+    }
+    else if(Platform.isIOS) {
+      showModalBottomSheet(
+          context: context,
+          builder: (BuildContext builder) {
+            return Container(
+              height: MediaQuery.of(context).copyWith().size.height / 3,
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.time,
+                use24hFormat: true,
+                onDateTimeChanged: (DateTime newdate) {
+                  setState(() {
+                    selectedTime = newdate.hour.toString() + ":" + newdate.minute.toString();
+                  });
+                },
+              ),
+            );
+          });
+    }
   }
 }
