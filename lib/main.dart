@@ -1,4 +1,5 @@
 import 'package:dkatalis_demo/activities/PasswordScreen.dart';
+import 'package:dkatalis_demo/activities/PersonalInfoScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PasswordScreen(),
+      home: PersonalInfoScreen(),
     );
   }
 }
