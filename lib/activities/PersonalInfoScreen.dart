@@ -1,7 +1,7 @@
 import 'package:dkatalis_demo/Constants/Constants.dart';
 import 'package:dkatalis_demo/activities/ScheduleVideoCallScreen.dart';
-import 'package:dkatalis_demo/views/CustomActionButton.dart';
-import 'package:dkatalis_demo/views/ProgressIndicatorMenu.dart';
+import 'package:dkatalis_demo/widgets/CustomActionButton.dart';
+import 'package:dkatalis_demo/widgets/ProgressIndicatorMenu.dart';
 import 'package:flutter/material.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
@@ -10,6 +10,8 @@ class PersonalInfoScreen extends StatefulWidget {
 }
 
 class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
+
+//  ------------------- Private Variables ---------------------
 
   String selectedIncome = null;
   Item selectedGoal = null;
@@ -23,6 +25,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
     const Item('Gift',Icon(Icons.card_giftcard)),
   ];
 
+//  ----------------------- Overide Methods ------------------
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -316,6 +319,8 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
       ),
     );
   }
+
+// ------------------------- Private Methods ---------------------------
 
   void goToNextPage() {
     if(null != selectedExpense && null != selectedIncome && null != selectedGoal) {

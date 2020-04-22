@@ -1,8 +1,10 @@
 import 'dart:io' ;
 import 'package:dkatalis_demo/Constants/Constants.dart';
-import 'package:dkatalis_demo/views/CustomActionButton.dart';
-import 'package:dkatalis_demo/views/ProgressIndicatorMenu.dart';
-import 'package:dkatalis_demo/views/RippleAnimation.dart';
+import 'package:dkatalis_demo/widgets/CustomActionButton.dart';
+import 'package:dkatalis_demo/widgets/PickerDropdownWidget.dart';
+import 'package:dkatalis_demo/widgets/ProgressIndicatorMenu.dart';
+import 'package:dkatalis_demo/widgets/RippleAnimation.dart';
+import 'package:dkatalis_demo/widgets/dialogs/DialogThanks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -13,9 +15,13 @@ class ScheduleVideoCallScreen extends StatefulWidget {
 
 class _ScheduleVideoCallScreenState extends State<ScheduleVideoCallScreen> {
 
+//  ------------------- Private Variables ---------------------
+
   var selectedTime = "-Choose Time-";
   var selectedDate = "-Choose Date";
   DateTime today = DateTime.now();
+
+//  ----------------------- Overide Methods ------------------
 
   @override
   Widget build(BuildContext context) {
@@ -95,116 +101,11 @@ class _ScheduleVideoCallScreenState extends State<ScheduleVideoCallScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        GestureDetector(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(10.0) //         <--- border radius here
-                                ),
-                                color: Colors.white
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Text(
-                                                "Date",
-                                              style: TextStyle(
-                                                  color: Colors.grey
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(top:4.0),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Text(
-                                                  selectedDate,
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Icon(Icons.keyboard_arrow_down),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          onTap: () {
-                            _openDatePicker(context);
-                          },
-                        ),
+                        PickerDropdownWidget("Date", selectedDate, _openDatePicker),
+
                         Padding(
                           padding: const EdgeInsets.only(top:32.0),
-                          child: GestureDetector(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(10.0) //         <--- border radius here
-                                  ),
-                                  color: Colors.white
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Column(
-                                        children: <Widget>[
-                                          Row(
-                                            children: <Widget>[
-                                              Text(
-                                                "Time",
-                                                style: TextStyle(
-                                                    color: Constants.grey
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(top:4.0),
-                                            child: Row(
-                                              children: <Widget>[
-                                                Text(
-                                                  selectedTime,
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 20
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Center(
-                                      child: Icon(Icons.keyboard_arrow_down),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            onTap: () {
-                              _openTimePicker(context);
-                            },
-                          ),
+                          child: PickerDropdownWidget("Time", selectedTime, _openTimePicker),
                         )
                       ],
                     ),
@@ -229,11 +130,24 @@ class _ScheduleVideoCallScreenState extends State<ScheduleVideoCallScreen> {
     );
   }
 
+// ------------------------- Private Methods ---------------------------
   void goToNextPage() {
 
+//    IF all the dropdown values are selected open a dialog
+    if(null != selectedTime && "-Choose Time-" != selectedTime
+        && null != selectedDate && "-Choose Date" != selectedTime)
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return DialogThanks();
+      },
+    );
   }
 
   void _openDatePicker(BuildContext context) async {
+
+//    Date picker as per native platform
     if(Platform.isAndroid) {
       final DateTime newdate = await showDatePicker(
           context: context,
@@ -274,6 +188,8 @@ class _ScheduleVideoCallScreenState extends State<ScheduleVideoCallScreen> {
   }
 
   void _openTimePicker(BuildContext context) async {
+
+//    Time picker as per native platform
     if(Platform.isAndroid) {
       final TimeOfDay newdate = await showTimePicker(
         context: context,

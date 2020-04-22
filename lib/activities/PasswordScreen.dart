@@ -2,8 +2,9 @@ import 'package:dkatalis_demo/Constants/Constants.dart';
 import 'package:dkatalis_demo/activities/PersonalInfoScreen.dart';
 import 'package:dkatalis_demo/models/PasswordValidationModel.dart';
 import 'package:dkatalis_demo/utilities/Validator.dart';
-import 'package:dkatalis_demo/views/CustomActionButton.dart';
-import 'package:dkatalis_demo/views/ProgressIndicatorMenu.dart';
+import 'package:dkatalis_demo/widgets/CustomActionButton.dart';
+import 'package:dkatalis_demo/widgets/PasswordValidityCheckConstraintWidget.dart';
+import 'package:dkatalis_demo/widgets/ProgressIndicatorMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,7 +15,8 @@ class PasswordScreen extends StatefulWidget {
 
 class _PasswordScreenState extends State<PasswordScreen> {
 
-  bool _obscureText = true;
+//  ------------------- Private Variables ---------------------
+  bool togglePasswordText = true;
   String complexityText = "";
   Color complexityColor = null;
   bool hasUpper = false;
@@ -22,6 +24,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
   bool hasNumber = false;
   bool hasSpecial = false;
   TextEditingController passwordController;
+
+//  ----------------------- Overide Methods ------------------
 
   @override
   void initState() {
@@ -114,7 +118,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                                                 color: Colors.grey,
                                             ),
                                           ),
-                                          obscureText: _obscureText,
+                                          obscureText: togglePasswordText,
                                           onChanged: _onChanged,
                                         ),
                                       ),
@@ -122,11 +126,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
                                     GestureDetector(
                                       child: Icon(
                                           Icons.remove_red_eye,
-                                        color: _obscureText ? Constants.grey : Constants.primaryBlueColor,
+                                        color: togglePasswordText ? Constants.grey : Constants.primaryBlueColor,
                                       ),
                                       onTap: () {
                                         setState(() {
-                                          _obscureText = !_obscureText;
+                                          togglePasswordText = !togglePasswordText;
                                         });
                                       },
                                     )
@@ -165,82 +169,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     padding: const EdgeInsets.only(top:8.0),
                     child: Row(
                       children: <Widget>[
-                        Expanded(
-                          child: Column(
-                            children: <Widget>[
-                              hasLower ?
-                              Image.asset(
-                                "drawables/tick.png",
-                                height: 32,
-                              ):
-                              Text(
-                                "a",
-                                style: Constants.passswordRulesTextStyle,
-                              ),
-                              Text(
-                                "Lowercase",
-                                style: Constants.textColorWhiteStyle,
-                              )
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: <Widget>[
-                              hasUpper ?
-                              Image.asset(
-                                  "drawables/tick.png",
-                                height: 32,
-                              ):
-                              Text(
-                                  "A",
-                                style: Constants.passswordRulesTextStyle,
-                              ),
-                              Text(
-                                  "Uppercase",
-                                style: Constants.textColorWhiteStyle,
-                              )
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: <Widget>[
-                              hasNumber ?
-                              Image.asset(
-                                  "drawables/tick.png",
-                                height: 32,
-                              ):
-                              Text(
-                                  "123",
-                                style: Constants.passswordRulesTextStyle,
-                              ),
-                              Text(
-                                  "Number",
-                                style: Constants.textColorWhiteStyle,
-                              )
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: <Widget>[
-                              hasSpecial ?
-                              Image.asset(
-                                  "drawables/tick.png",
-                                height: 32,
-                              ):
-                              Text(
-                                  "9+",
-                                style: Constants.passswordRulesTextStyle,
-                              ),
-                              Text(
-                                  "Characters",
-                                style: Constants.textColorWhiteStyle,
-                              )
-                            ],
-                          ),
-                        )
+                        PasswordValidityCheckConstraintWidget(hasLower, "a", "Lowercase"),
+                        PasswordValidityCheckConstraintWidget(hasUpper, "A", "Uppercase"),
+                        PasswordValidityCheckConstraintWidget(hasNumber, "123", "Number"),
+                        PasswordValidityCheckConstraintWidget(hasSpecial, "9+", "Characters"),
                       ],
                     ),
                   ),
@@ -266,7 +198,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
     );
   }
 
+// ------------------------- Private Methods ---------------------------
+
   void goToNextPage() {
+
+//    if all the validation are sucessfull then goto next screen
     if(hasSpecial && hasNumber && hasUpper && hasLower) {
       Navigator.of(context).push(MaterialPageRoute(builder: (context) => PersonalInfoScreen()));
     }
@@ -275,6 +211,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
   void _onChanged(String password) {
     PasswordValidationModel passwordValidationModel = Validator.ValidatePassword(password);
 
+//    Password Complexity based on length of password
     if(password.length <= 3) {
       complexityText = " Very Weak";
       complexityColor = Colors.red;
@@ -296,7 +233,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
     complexityText = " Very Weak";
     complexityColor = Colors.red;
     }
-    else if(!passwordValidationModel.hasUppercase && !passwordValidationModel.hasLowercase && !passwordValidationModel.hasNumber && !passwordValidationModel.hasSpecialCharacter) {
+    else if(!passwordValidationModel.hasUppercase && !passwordValidationModel.hasLowercase
+        && !passwordValidationModel.hasNumber
+        && !passwordValidationModel.hasSpecialCharacter) {
       complexityText = " Weak";
       complexityColor = Colors.yellowAccent;
     }

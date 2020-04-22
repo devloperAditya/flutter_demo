@@ -1,7 +1,7 @@
 import 'package:dkatalis_demo/Constants/Constants.dart';
 import 'package:dkatalis_demo/activities/PasswordScreen.dart';
-import 'package:dkatalis_demo/views/CustomActionButton.dart';
-import 'package:dkatalis_demo/views/ProgressIndicatorMenu.dart';
+import 'package:dkatalis_demo/widgets/CustomActionButton.dart';
+import 'package:dkatalis_demo/widgets/ProgressIndicatorMenu.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/Validator.dart';
@@ -13,11 +13,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+//  ------------------- Private Variables ---------------------
+
   TextEditingController emailController = TextEditingController();
   bool validateEmail = false;
   String invalidEmailMessage = "";
   bool hasError = false;
 
+//  ----------------------- Overide Methods -------------------
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -84,7 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: <Widget>[
                               Expanded(
                                 child: Text(
-                                  "Welcome to  The Bank of The Future." + "\n" + "Manage and track your accounts on" + "\n" + "the go.",
+                                  "Welcome to  The Bank of The Future." + "\n" +
+                                      "Manage and track your accounts on" + "\n" +
+                                      "the go.",
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
@@ -146,23 +151,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-//                      Expanded(
-//                        child: Container(
-//                          color: Colors.blue[500],
-////                          child: Padding(
-////                            padding: const EdgeInsets.symmetric(horizontal:16.0),
-////                            child: Container(
-////                              height: 50,
-////                              color: Colors.blue[500],
-////                              child: Center(
-////                                child: Text(
-////                                  "Next"
-////                                ),
-////                              ),
-////                            ),
-////                          ),
-//                        ),
-//                      )
                       ],
                     ),
                   ),
@@ -179,21 +167,29 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+
+// ------------------------- Private Methods ---------------------------
+
   void goToNextPage() {
     validateEmail = false;
     hasError = false;
     invalidEmailMessage = "";
+
+//    error handling for no text in the email field
     if(emailController.text.length == 0 || emailController.text.isEmpty) {
       validateEmail = true;
       invalidEmailMessage = "Email Cannot be empty";
       hasError = true;
     }
+
+//    error handling for invalid email id
     if(!Validator.ValidateEmail(emailController.text, true)){
       validateEmail = true;
       invalidEmailMessage = "Invalid Email Id";
       hasError = true;
     }
 
+//    if error :- just refresh the screen with the error message else navigate to next screen
     if(hasError) {
       setState(() {});
     }
