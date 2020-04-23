@@ -1,4 +1,5 @@
 import 'package:dkatalis_demo/Constants/Constants.dart';
+import 'package:dkatalis_demo/widgets/canvas/HomeScreenShapes.dart';
 import 'package:dkatalis_demo/activities/PasswordScreen.dart';
 import 'package:dkatalis_demo/widgets/CustomActionButton.dart';
 import 'package:dkatalis_demo/widgets/ProgressIndicatorMenu.dart';
@@ -33,9 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               Stack(
                 children: <Widget>[
-                  Container(
-                    child: Image.asset("drawables/screen1image.png"),
-                  ),
+                  HomeScreenShapes(),
                   Padding(
                     padding: const EdgeInsets.only(left:16.0,right:16.0, top:48.0),
                     child: ProgressIndicatorMenu(0),
@@ -127,11 +126,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   decoration: InputDecoration(
                                     errorText: validateEmail ? invalidEmailMessage : null,
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.red
-                                      ),
-                                    ),
                                     prefixIcon: Icon(Icons.mail_outline,
                                     color: Constants.grey,),
                                     border: InputBorder.none,
